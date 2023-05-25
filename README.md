@@ -1,2 +1,4 @@
 # medium-reader
-read unlimited number of medium stories
+Read unlimited number of medium stories
+
+This project utilizes native webview of os to render the website 
