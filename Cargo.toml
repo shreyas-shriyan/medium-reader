@@ -3,7 +3,6 @@ name = "medium-reader"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-wry = "0.13.1"
+image = "0.24.6"
+wry = {version="0.24.3",features=["tray"]}
