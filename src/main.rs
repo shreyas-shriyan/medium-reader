@@ -10,7 +10,15 @@ use wry::{
     webview::WebViewBuilder,
 };
 
+use cli_clipboard::{ClipboardContext, ClipboardProvider};
+
 fn render(url: &str) -> wry::Result<()> {
+    let mut ctx = ClipboardContext::new().unwrap();
+
+    let clipboardContent = ctx.get_contents();
+
+    println!("{:?}", clipboardContent);
+
     // event loop
     let event_loop: EventLoop<()> = EventLoop::new();
 
