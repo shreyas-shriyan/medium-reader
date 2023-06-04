@@ -2,9 +2,9 @@ use wry::{
     application::{
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
+        window::WindowBuilder,
         // menu::{ContextMenu, MenuItemAttributes},
         // system_tray::{Icon, SystemTrayBuilder},
-        window::WindowBuilder,
         // TrayId,
     },
     webview::WebViewBuilder,
@@ -20,7 +20,7 @@ fn main() {
 fn read_clipboard() -> String {
     let mut clipboard_data = cli_clipboard::get_contents().unwrap();
     if clipboard_data.is_empty() {
-        // if clip
+        // if no clipboard data open medium.com
         clipboard_data = "https://medium.com/".to_string()
     }
     return clipboard_data;
