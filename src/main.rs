@@ -11,6 +11,8 @@ use wry::{
     webview::WebViewBuilder,
 };
 
+use url::{Host, Url};
+
 fn main() {
     let url: String = read_clipboard();
     let _page = render(&url);
@@ -19,7 +21,22 @@ fn main() {
 fn read_clipboard() -> String {
     gtk::init().unwrap();
     let cliboard = Clipboard::new();
-    let content = cliboard.read_text().unwrap();
+
+    let mut content = cliboard.read_text().unwrap();
+
+    let default_url: String = "https://medium.com".to_string();
+
+    if content.is_empty() {
+        content = default_url
+    } else {
+        let url_parsed_data = Url::parse(&content).unwrap();
+
+        if url_parsed_data.host() == Some(Host::Domain("medium.com")) {
+            content = url_parsed_data.to_string();
+        } else {
+            content = default_url
+        }
+    }
     return content.to_string();
 }
 
