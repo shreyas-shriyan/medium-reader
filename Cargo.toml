@@ -2,6 +2,9 @@
 name = "medium-reader"
 version = "0.1.0"
 edition = "2021"
+description = "read meduim posts without limits"
+license = "MIT"
+authors = ["Shreyas Shriyan <shreyshriyan@gmail.com>"]
 
 [dependencies]
 gtk = "0.15.1"
