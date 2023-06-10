@@ -19,6 +19,7 @@ fn main() {
 }
 
 fn read_clipboard() -> String {
+    #[cfg(target_os = "linux")]
     gtk::init().unwrap();
 
     let cliboard = Clipboard::new();
