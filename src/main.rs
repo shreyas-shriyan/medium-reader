@@ -1,9 +1,6 @@
 use wry::{
     application::{
         clipboard::Clipboard,
-        // menu::{ContextMenu, MenuItemAttributes},
-        // system_tray::{Icon, SystemTrayBuilder},
-        // TrayId,
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
         window::WindowBuilder,
@@ -94,29 +91,3 @@ fn generate_url(content: String) -> String {
     return parsed_url.to_string();
 }
 
-// fn tray_init(&event_loop) {
-//     let mut tray_menu = ContextMenu::new();
-
-//     tray_menu.add_item(MenuItemAttributes::new("Quit"));
-
-//     let path = concat!(env!("CARGO_MANIFEST_DIR"), "/src/assets/logo.png");
-
-//     let icon = load_icon(std::path::Path::new(path));
-
-//     let _system_tray = SystemTrayBuilder::new(icon.clone(), Some(tray_menu))
-//         .with_id(TrayId::new("main-tray"))
-//         .build(&event_loop)
-//         .unwrap();
-// }
-
-// fn load_icon(path: &std::path::Path) -> Icon {
-//     let (icon_rgba, icon_width, icon_height) = {
-//         let image = image::open(path)
-//             .expect("Failed to open icon path")
-//             .into_rgba8();
-//         let (width, height) = image.dimensions();
-//         let rgba = image.into_raw();
-//         (rgba, width, height)
-//     };
-//     Icon::from_rgba(icon_rgba, icon_width, icon_height).expect("Failed to open icon")
-// }
