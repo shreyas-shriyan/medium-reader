@@ -5,7 +5,7 @@ use wry::{
         event_loop::{ControlFlow, EventLoop},
         window::WindowBuilder,
     },
-    webview::WebViewBuilder,
+    webview::{WebView, WebViewBuilder},
 };
 
 use url::Url;
@@ -38,7 +38,8 @@ fn render(url: &str) -> wry::Result<()> {
         .build(&event_loop)?;
 
     // webview logic
-    let _webview = WebViewBuilder::new(window)?.with_url(url)?.build()?;
+
+    let webview = WebViewBuilder::new(window)?.with_url(url)?.build()?;
 
     // event loop
     event_loop.run(move |event, _, control_flow| {
@@ -49,18 +50,23 @@ fn render(url: &str) -> wry::Result<()> {
             Event::WindowEvent {
                 event: WindowEvent::CloseRequested,
                 ..
-            } => *control_flow = ControlFlow::Exit,
+            } => {
+                let _cleared_webview = WebView::clear_all_browsing_data(&webview);
+                *control_flow = ControlFlow::Exit;
+            }
             _ => (),
         }
     });
 }
 
 fn generate_url(content: String) -> String {
-    let url = Url::parse("https://medium.com").unwrap();
+    let base_url = "https://medium.com";
+
+    let url = Url::parse(&base_url).unwrap();
 
     let url_parse_data = Url::parse(&content).unwrap_or(url);
 
-    let mut parsed_url = url_parse_data.host_str().unwrap();
+    let mut parsed_url = url_parse_data.host_str().unwrap_or(base_url);
 
     let medium_custom_domains: Vec<&str> = vec![
         "medium.com",
@@ -90,4 +96,3 @@ fn generate_url(content: String) -> String {
 
     return parsed_url.to_string();
 }
-
