@@ -29,8 +29,13 @@ fn read_clipboard() -> String {
 }
 
 fn render(url: &str) -> wry::Result<()> {
+    enum UserEvent {
+        Navigation(String),
+    }
+
     // event loop
-    let event_loop: EventLoop<()> = EventLoop::new();
+    let event_loop: EventLoop<UserEvent> = EventLoop::with_user_event();
+    let proxy = event_loop.create_proxy();
 
     // window logic
     let window = WindowBuilder::new()
@@ -38,8 +43,12 @@ fn render(url: &str) -> wry::Result<()> {
         .build(&event_loop)?;
 
     // webview logic
-
-    let webview = WebViewBuilder::new(window)?.with_url(url)?.build()?;
+    let webview = WebViewBuilder::new(window)?
+        .with_url(url)?
+        .with_document_title_changed_handler(move |_window, title| {
+            let _ = proxy.send_event(UserEvent::Navigation(title));
+        })
+        .build()?;
 
     // event loop
     event_loop.run(move |event, _, control_flow| {
@@ -51,8 +60,10 @@ fn render(url: &str) -> wry::Result<()> {
                 event: WindowEvent::CloseRequested,
                 ..
             } => {
-                let _cleared_webview = WebView::clear_all_browsing_data(&webview);
-                *control_flow = ControlFlow::Exit;
+                let _cleared_webview = *control_flow = ControlFlow::Exit;
+            }
+            Event::UserEvent(UserEvent::Navigation(_title)) => {
+                let _ = WebView::clear_all_browsing_data(&webview);
             }
             _ => (),
         }
