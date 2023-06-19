@@ -8,10 +8,10 @@ authors = ["Shreyas Shriyan <shreyshriyan@gmail.com>"]
 
 [dependencies]
 url = "2.4.0"
-wry = "0.24.3"
+wry = "0.29.0"
 
 [target."cfg(any(target_os = \"linux\", target_os = \"dragonfly\", target_os = \"freebsd\", target_os = \"openbsd\", target_os = \"netbsd\"))".dependencies]
-gtk = "0.15.1"
+gtk = "0.16.0"
 
 [package.metadata.bundle]
 identifier = "work.shreyas.mediumreader"
