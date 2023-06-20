@@ -21,7 +21,7 @@ fn read_clipboard() -> String {
 
     let cliboard = Clipboard::new();
 
-    let content = cliboard.read_text().unwrap();
+    let content = cliboard.read_text().unwrap_or("".to_string());
 
     let webview_url = generate_url(content);
 
